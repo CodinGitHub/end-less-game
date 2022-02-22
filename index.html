@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endless Game</title>
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <!-- Librerias JS -->
+    <script src="js/fpsClass.js"></script>
+    <script src="js/canvasAPI.js"></script>
+    <script src="js/mouseClass.js"></script>
+    <script src="js/keyboardClass.js"></script>
+    <script src="js/audioClass.js"></script>
+    <script src="js/naveClass.js"></script>
+    <script src="js/estelaClass.js"></script>
+    <script src="js/tunelClass.js"></script>
+    <script src="js/explosionClass.js"></script>
+    <script src="js/juegoClass.js"></script>
+</head>
+<body>
+    <h1>ENDLESS TUNNNEL</h1>
+    <p>Llega lo más lejos posible en esta gruta interminable!!</p>
+    <!-- Interfaz de datos del juego -->
+    <div id="interfaz">
+        <span id="fps"></span>
+        <span id="score"></span>
+        <span id="record"></span>
+    </div>
+    <!-- Lugar donde dibujaremos el juego -->
+    <canvas id="miCanvas" class="canvas" width="800" height="450"></canvas>
+    <!-- Javascript del juego -->
+    <script>
+        //Variables generales
+        var fps = new fpsClass();
+        var Keyboard = new keyboardClass();
+        var Mouse = new mouseClass('miCanvas');
+        var libreria = new canvasAPI('miCanvas');
+        //Precarga de imagenes
+        var imagen = [];
+        imagen['player']=libreria.load('imagenes/nave.png');
+        imagen['splash']=libreria.load('imagenes/splash.png');
+        imagen['explosion']=libreria.load('imagenes/explosion.png', animateScene);
+        //Variables del juego
+        var juego = new juegoClass();
+        //BUCLE MOTOR DEL JUEGO
+        function animateScene(){
+            //Ejecutamos el juego
+            juego.run();
+            //Interfaz
+            document.getElementById('fps').innerHTML = 'FPS: ' + fps.show();
+            document.getElementById('score').innerHTML = 'SCORE: ' + juego.score();
+            document.getElementById('record').innerHTML = 'RECORD: ' + juego.record();
+            //Bucle
+            requestAnimationFrame(animateScene);
+        }
+    </script>
+</body>
+</html>
